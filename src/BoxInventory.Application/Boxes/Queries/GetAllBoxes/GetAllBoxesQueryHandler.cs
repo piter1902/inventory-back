@@ -21,6 +21,7 @@ public class GetAllBoxesQueryHandler : IRequestHandler<GetAllBoxesQuery, List<Bo
             b.Id.ToString(),
             b.Identifier,
             b.Name,
+            b.Description,
             b.QrUrl,
             b.ImageBase64,
             b.Items.Select(i => new ItemDto(i.Id.ToString(), i.Name, i.Description)).ToList()

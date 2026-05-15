@@ -21,7 +21,7 @@ public class CreateBoxCommandHandler : IRequestHandler<CreateBoxCommand, BoxDto>
     {
         var identifier = $"BOX-{Guid.NewGuid().ToString("N")[..8].ToUpper()}";
         var compressedImage = _imageCompression.Compress(request.ImageBase64);
-        var box = new Box(identifier, request.Name, compressedImage);
+        var box = new Box(identifier, request.Name, request.Description, compressedImage);
 
         if (request.Items is not null)
         {
@@ -40,6 +40,7 @@ public class CreateBoxCommandHandler : IRequestHandler<CreateBoxCommand, BoxDto>
         box.Id.ToString(),
         box.Identifier,
         box.Name,
+        box.Description,
         box.QrUrl,
         box.ImageBase64,
         box.Items.Select(i => new ItemDto(i.Id.ToString(), i.Name, i.Description)).ToList());

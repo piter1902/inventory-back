@@ -24,6 +24,7 @@ public class GetBoxByIdQueryHandler : IRequestHandler<GetBoxByIdQuery, BoxDto>
             box.Id.ToString(),
             box.Identifier,
             box.Name,
+            box.Description,
             box.QrUrl,
             box.ImageBase64,
             box.Items.Select(i => new ItemDto(i.Id.ToString(), i.Name, i.Description)).ToList());

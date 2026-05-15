@@ -7,6 +7,7 @@ public record SearchResultDto(
 public record SearchBoxResultDto(
     string Id,
     string Name,
+    string Description,
     string ImageBase64);
 
 public record SearchItemResultDto(

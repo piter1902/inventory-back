@@ -21,13 +21,15 @@ public class SearchQueryHandler : IRequestHandler<SearchQuery, SearchResultDto>
         var boxes = await _repository.SearchByNameAsync(request.Query, cancellationToken);
 
         var matchingBoxes = boxes
-            .Where(b => b.Name.Contains(request.Query, StringComparison.OrdinalIgnoreCase))
-            .Select(b => new SearchBoxResultDto(b.Id.ToString(), b.Name, b.ImageBase64))
+            .Where(b => b.Name.Contains(request.Query, StringComparison.OrdinalIgnoreCase)
+                     || b.Description.Contains(request.Query, StringComparison.OrdinalIgnoreCase))
+            .Select(b => new SearchBoxResultDto(b.Id.ToString(), b.Name, b.Description, b.ImageBase64))
             .ToList();
 
         var matchingItems = boxes
             .SelectMany(b => b.Items
-                .Where(i => i.Name.Contains(request.Query, StringComparison.OrdinalIgnoreCase))
+                .Where(i => i.Name.Contains(request.Query, StringComparison.OrdinalIgnoreCase)
+                         || i.Description.Contains(request.Query, StringComparison.OrdinalIgnoreCase))
                 .Select(i => new SearchItemResultDto(
                     i.Id.ToString(),
                     i.Name,

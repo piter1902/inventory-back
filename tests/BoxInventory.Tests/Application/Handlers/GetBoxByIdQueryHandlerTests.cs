@@ -20,7 +20,7 @@ public class GetBoxByIdQueryHandlerTests
     public async Task Handle_ExistingBox_ReturnsBox()
     {
         var id = "507f1f77bcf86cd799439011";
-        var box = new Box("BOX-001", "Caja", null);
+        var box = new Box("BOX-001", "Caja", null, null);
         box.AddItem(new Item("Cable", "desc"));
         _repository.Setup(r => r.GetByIdAsync(id, It.IsAny<CancellationToken>())).ReturnsAsync(box);
 

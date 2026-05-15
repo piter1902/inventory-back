@@ -8,17 +8,19 @@ public class Box : IEntity
     public ObjectId Id { get; private set; }
     public string Identifier { get; private set; } = null!;
     public string Name { get; private set; } = null!;
+    public string Description { get; private set; } = null!;
     public string QrUrl { get; private set; } = null!;
     public string ImageBase64 { get; private set; } = null!;
     public List<Item> Items { get; private set; } = null!;
 
     private Box() { }
 
-    public Box(string identifier, string? name, string? imageBase64)
+    public Box(string identifier, string? name, string? description, string? imageBase64)
     {
         Id = ObjectId.GenerateNewId();
         SetIdentifier(identifier);
         SetName(name);
+        SetDescription(description);
         SetImageBase64(imageBase64);
         Items = [];
     }
@@ -35,6 +37,11 @@ public class Box : IEntity
     public void SetName(string? name)
     {
         Name = name ?? string.Empty;
+    }
+
+    public void SetDescription(string? description)
+    {
+        Description = description ?? string.Empty;
     }
 
     public void SetImageBase64(string? imageBase64)

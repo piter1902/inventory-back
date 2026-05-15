@@ -20,8 +20,8 @@ public class GetAllBoxesQueryHandlerTests
     {
         var boxes = new List<Box>
         {
-            new("BOX-001", "Caja 1", null),
-            new("BOX-002", "Caja 2", null),
+            new("BOX-001", "Caja 1", null, null),
+            new("BOX-002", "Caja 2", null, null),
         };
         boxes[0].AddItem(new Item("Item 1", "desc"));
         _repository.Setup(r => r.GetAllAsync(It.IsAny<CancellationToken>())).ReturnsAsync(boxes);
@@ -47,7 +47,7 @@ public class GetAllBoxesQueryHandlerTests
     [Fact]
     public async Task Handle_IncludesItemsInBoxes()
     {
-        var box = new Box("BOX-001", null, null);
+        var box = new Box("BOX-001", null, null, null);
         box.AddItem(new Item("Cable", "desc"));
         _repository.Setup(r => r.GetAllAsync(It.IsAny<CancellationToken>())).ReturnsAsync([box]);
 

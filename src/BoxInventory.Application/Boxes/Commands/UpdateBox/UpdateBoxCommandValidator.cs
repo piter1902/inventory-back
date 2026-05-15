@@ -12,6 +12,9 @@ public class UpdateBoxCommandValidator : AbstractValidator<UpdateBoxCommand>
         RuleFor(v => v.Name)
             .MaximumLength(200);
 
+        RuleFor(v => v.Description)
+            .MaximumLength(2000);
+
         RuleFor(v => v.ImageBase64)
             .MaximumLength(10_000_000);
 

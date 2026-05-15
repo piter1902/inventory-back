@@ -21,7 +21,7 @@ public class DeleteBoxCommandHandlerTests
     {
         var id = "507f1f77bcf86cd799439011";
         _repository.Setup(r => r.GetByIdAsync(id, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new Box("BOX-001", null, null));
+            .ReturnsAsync(new Box("BOX-001", null, null, null));
 
         var result = await _handler.Handle(new DeleteBoxCommand(id), default);
 

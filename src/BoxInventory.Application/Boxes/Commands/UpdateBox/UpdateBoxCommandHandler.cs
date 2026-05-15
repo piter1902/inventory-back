@@ -24,6 +24,7 @@ public class UpdateBoxCommandHandler : IRequestHandler<UpdateBoxCommand, BoxDto>
             ?? throw new NotFoundException(nameof(Domain.Entities.Box), request.Id);
 
         box.SetName(request.Name);
+        box.SetDescription(request.Description);
         box.SetImageBase64(_imageCompression.Compress(request.ImageBase64));
 
         if (request.Items is not null)
@@ -41,6 +42,7 @@ public class UpdateBoxCommandHandler : IRequestHandler<UpdateBoxCommand, BoxDto>
             box.Id.ToString(),
             box.Identifier,
             box.Name,
+            box.Description,
             box.QrUrl,
             box.ImageBase64,
             box.Items.Select(i => new ItemDto(i.Id.ToString(), i.Name, i.Description)).ToList());

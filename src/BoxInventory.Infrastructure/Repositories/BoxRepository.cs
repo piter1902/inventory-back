@@ -26,7 +26,10 @@ public class BoxRepository : BaseRepository<Box>, IBoxRepository
 
         var filter = Builders<Box>.Filter.Or(
             Builders<Box>.Filter.Regex(b => b.Name, regex),
-            Builders<Box>.Filter.ElemMatch(b => b.Items, Builders<Item>.Filter.Regex(i => i.Name, regex)));
+            Builders<Box>.Filter.Regex(b => b.Description, regex),
+            Builders<Box>.Filter.ElemMatch(b => b.Items, Builders<Item>.Filter.Or(
+                Builders<Item>.Filter.Regex(i => i.Name, regex),
+                Builders<Item>.Filter.Regex(i => i.Description, regex))));
 
         return await Collection.Find(filter).ToListAsync(cancellationToken);
     }
