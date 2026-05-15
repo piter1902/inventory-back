@@ -6,10 +6,12 @@ using BoxInventory.Application.Boxes.Queries.GetBoxById;
 using BoxInventory.Application.Boxes.Queries.Search;
 using BoxInventory.Application.DTOs;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoxInventory.Api.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class BoxesController : ControllerBase

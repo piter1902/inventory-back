@@ -374,6 +374,13 @@ Program.cs
  fluentvalidation/11.9.2/lib/net8.0/FluentValidation.dll
  mediatr.contracts/2.0.1/lib/netstandard2.0/MediatR.Contracts.dll
  mediatr/12.4.0/lib/net6.0/MediatR.dll
+ microsoft.aspnetcore.authentication.jwtbearer/10.0.8/lib/net10.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+ microsoft.identitymodel.abstractions/8.0.1/lib/net9.0/Microsoft.IdentityModel.Abstractions.dll
+ microsoft.identitymodel.jsonwebtokens/8.0.1/lib/net9.0/Microsoft.IdentityModel.JsonWebTokens.dll
+ microsoft.identitymodel.logging/8.0.1/lib/net9.0/Microsoft.IdentityModel.Logging.dll
+ microsoft.identitymodel.protocols.openidconnect/8.0.1/lib/net9.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+ microsoft.identitymodel.protocols/8.0.1/lib/net9.0/Microsoft.IdentityModel.Protocols.dll
+ microsoft.identitymodel.tokens/8.0.1/lib/net9.0/Microsoft.IdentityModel.Tokens.dll
  microsoft.openapi/1.6.14/lib/netstandard2.0/Microsoft.OpenApi.dll
  mongodb.bson/2.28.0/lib/netstandard2.1/MongoDB.Bson.dll
  mongodb.driver.core/2.28.0/lib/netstandard2.1/MongoDB.Driver.Core.dll
@@ -385,6 +392,7 @@ Program.cs
  swashbuckle.aspnetcore.swagger/6.6.2/lib/net8.0/Swashbuckle.AspNetCore.Swagger.dll
  swashbuckle.aspnetcore.swaggergen/6.6.2/lib/net8.0/Swashbuckle.AspNetCore.SwaggerGen.dll
  swashbuckle.aspnetcore.swaggerui/6.6.2/lib/net8.0/Swashbuckle.AspNetCore.SwaggerUI.dll
+ system.identitymodel.tokens.jwt/8.0.1/lib/net9.0/System.IdentityModel.Tokens.Jwt.dll
  zstdsharp.port/0.7.3/lib/net7.0/ZstdSharp.dll
 
 [analyzerReferences]
