@@ -86,10 +86,22 @@ DTOs/
  BoxDto.cs
  ItemDto.cs
  SearchResultDto.cs
+ ZoneDto.cs
 obj/Debug/net10.0/
  .NETCoreApp,Version=v10.0.AssemblyAttributes.cs
  BoxInventory.Application.AssemblyInfo.cs
  BoxInventory.Application.GlobalUsings.g.cs
+Zones/Commands/CreateZone/
+ CreateZoneCommand.cs
+ CreateZoneCommandHandler.cs
+ CreateZoneCommandValidator.cs
+Zones/Queries/GetAllZones/
+ GetAllZonesQuery.cs
+ GetAllZonesQueryHandler.cs
+Zones/Queries/GetZoneById/
+ GetZoneByIdQuery.cs
+ GetZoneByIdQueryHandler.cs
+ GetZoneByIdQueryValidator.cs
 
 [metadataReferences]
 ../BoxInventory.Domain/obj/Debug/net10.0/ref/BoxInventory.Domain.dll

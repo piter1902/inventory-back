@@ -62,7 +62,7 @@ public class BoxesController : ControllerBase
     [HttpPut("{id}")]
     public async Task<ActionResult<BoxDto>> Update(string id, [FromBody] UpdateBoxRequest request, CancellationToken cancellationToken)
     {
-        var command = new UpdateBoxCommand(id, request.Name, request.Description, request.ImageBase64, request.Items);
+        var command = new UpdateBoxCommand(id, request.Name, request.Description, request.ImageBase64, request.ZoneId, request.Items);
         var box = await _mediator.Send(command, cancellationToken);
         return Ok(box);
     }
@@ -77,4 +77,4 @@ public class BoxesController : ControllerBase
     }
 }
 
-public record UpdateBoxRequest(string? Name, string? Description, string? ImageBase64, List<UpdateItemRequest>? Items);
+public record UpdateBoxRequest(string? Name, string? Description, string? ImageBase64, string? ZoneId, List<UpdateItemRequest>? Items);

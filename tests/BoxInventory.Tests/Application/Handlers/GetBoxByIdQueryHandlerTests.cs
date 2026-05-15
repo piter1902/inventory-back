@@ -2,6 +2,7 @@ using BoxInventory.Application.Boxes.Queries.GetBoxById;
 using BoxInventory.Application.Common.Exceptions;
 using BoxInventory.Domain.Entities;
 using BoxInventory.Domain.Interfaces;
+using MongoDB.Bson;
 
 namespace BoxInventory.Tests.Application.Handlers;
 
@@ -20,7 +21,7 @@ public class GetBoxByIdQueryHandlerTests
     public async Task Handle_ExistingBox_ReturnsBox()
     {
         var id = "507f1f77bcf86cd799439011";
-        var box = new Box("BOX-001", "Caja", null, null);
+        var box = new Box("BOX-001", "Caja", null, null, ObjectId.Empty);
         box.AddItem(new Item("Cable", "desc"));
         _repository.Setup(r => r.GetByIdAsync(id, It.IsAny<CancellationToken>())).ReturnsAsync(box);
 

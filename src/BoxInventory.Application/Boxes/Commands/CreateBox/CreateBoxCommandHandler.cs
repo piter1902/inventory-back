@@ -3,17 +3,20 @@ using BoxInventory.Application.DTOs;
 using BoxInventory.Domain.Entities;
 using BoxInventory.Domain.Interfaces;
 using MediatR;
+using MongoDB.Bson;
 
 namespace BoxInventory.Application.Boxes.Commands.CreateBox;
 
 public class CreateBoxCommandHandler : IRequestHandler<CreateBoxCommand, BoxDto>
 {
     private readonly IBoxRepository _repository;
+    private readonly IZoneRepository _zoneRepository;
     private readonly IImageCompressionService _imageCompression;
 
-    public CreateBoxCommandHandler(IBoxRepository repository, IImageCompressionService imageCompression)
+    public CreateBoxCommandHandler(IBoxRepository repository, IZoneRepository zoneRepository, IImageCompressionService imageCompression)
     {
         _repository = repository;
+        _zoneRepository = zoneRepository;
         _imageCompression = imageCompression;
     }
 
@@ -21,7 +24,20 @@ public class CreateBoxCommandHandler : IRequestHandler<CreateBoxCommand, BoxDto>
     {
         var identifier = $"BOX-{Guid.NewGuid().ToString("N")[..8].ToUpper()}";
         var compressedImage = _imageCompression.Compress(request.ImageBase64);
-        var box = new Box(identifier, request.Name, request.Description, compressedImage);
+
+        ObjectId zoneId;
+        if (request.ZoneId is not null)
+        {
+            zoneId = ObjectId.Parse(request.ZoneId);
+        }
+        else
+        {
+            var defaultZone = await _zoneRepository.GetByNameAsync("Sin especificar", cancellationToken)
+                ?? throw new InvalidOperationException("Default zone 'Sin especificar' not found");
+            zoneId = defaultZone.Id;
+        }
+
+        var box = new Box(identifier, request.Name, request.Description, compressedImage, zoneId);
 
         if (request.Items is not null)
         {
@@ -43,5 +59,6 @@ public class CreateBoxCommandHandler : IRequestHandler<CreateBoxCommand, BoxDto>
         box.Description,
         box.QrUrl,
         box.ImageBase64,
+        box.ZoneId.ToString(),
         box.Items.Select(i => new ItemDto(i.Id.ToString(), i.Name, i.Description)).ToList());
 }

@@ -12,6 +12,9 @@ public class CreateBoxCommandValidator : AbstractValidator<CreateBoxCommand>
         RuleFor(v => v.Description)
             .MaximumLength(2000);
 
+        RuleFor(v => v.ZoneId)
+            .MaximumLength(24);
+
         RuleFor(v => v.ImageBase64)
             .MaximumLength(10_000_000);
 

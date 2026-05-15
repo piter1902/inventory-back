@@ -8,7 +8,7 @@ public class BoxTests
     [Fact]
     public void Create_WithValidData_SetsProperties()
     {
-        var box = new Box("BOX-001", "Caja trastero", null, null);
+        var box = new Box("BOX-001", "Caja trastero", null, null, ObjectId.Empty);
 
         box.Identifier.Should().Be("BOX-001");
         box.Name.Should().Be("Caja trastero");
@@ -19,7 +19,7 @@ public class BoxTests
     [Fact]
     public void Create_WithNullName_SetsEmptyString()
     {
-        var box = new Box("BOX-001", null, null, null);
+        var box = new Box("BOX-001", null, null, null, ObjectId.Empty);
 
         box.Name.Should().BeEmpty();
         box.QrUrl.Should().Be("/box/BOX-001");
@@ -28,7 +28,7 @@ public class BoxTests
     [Fact]
     public void SetIdentifier_WithEmpty_Throws()
     {
-        var box = new Box("BOX-001", null, null, null);
+        var box = new Box("BOX-001", null, null, null, ObjectId.Empty);
 
         Action act = () => box.SetIdentifier("");
 
@@ -38,7 +38,7 @@ public class BoxTests
     [Fact]
     public void SetIdentifier_WithWhitespace_Throws()
     {
-        var box = new Box("BOX-001", null, null, null);
+        var box = new Box("BOX-001", null, null, null, ObjectId.Empty);
 
         Action act = () => box.SetIdentifier("   ");
 
@@ -48,7 +48,7 @@ public class BoxTests
     [Fact]
     public void AddItem_ValidItem_AddsToList()
     {
-        var box = new Box("BOX-001", null, null, null);
+        var box = new Box("BOX-001", null, null, null, ObjectId.Empty);
         var item = new Item("Cable HDMI", "Cable negro");
 
         box.AddItem(item);
@@ -59,7 +59,7 @@ public class BoxTests
     [Fact]
     public void AddItem_NullItem_Throws()
     {
-        var box = new Box("BOX-001", null, null, null);
+        var box = new Box("BOX-001", null, null, null, ObjectId.Empty);
 
         Action act = () => box.AddItem(null!);
 
@@ -69,7 +69,7 @@ public class BoxTests
     [Fact]
     public void RemoveItem_ExistingItem_RemovesFromList()
     {
-        var box = new Box("BOX-001", null, null, null);
+        var box = new Box("BOX-001", null, null, null, ObjectId.Empty);
         var item = new Item("Cable HDMI", "Cable negro");
         box.AddItem(item);
 
@@ -81,7 +81,7 @@ public class BoxTests
     [Fact]
     public void RemoveItem_NonExistent_Throws()
     {
-        var box = new Box("BOX-001", null, null, null);
+        var box = new Box("BOX-001", null, null, null, ObjectId.Empty);
 
         Action act = () => box.RemoveItem(ObjectId.GenerateNewId());
 
@@ -91,7 +91,7 @@ public class BoxTests
     [Fact]
     public void UpdateItem_ExistingItem_UpdatesProperties()
     {
-        var box = new Box("BOX-001", null, null, null);
+        var box = new Box("BOX-001", null, null, null, ObjectId.Empty);
         var item = new Item("Cable HDMI", "Cable negro");
         box.AddItem(item);
 
@@ -105,7 +105,7 @@ public class BoxTests
     [Fact]
     public void UpdateItem_NonExistent_Throws()
     {
-        var box = new Box("BOX-001", null, null, null);
+        var box = new Box("BOX-001", null, null, null, ObjectId.Empty);
 
         Action act = () => box.UpdateItem(ObjectId.GenerateNewId(), "name", "desc");
 
@@ -115,8 +115,8 @@ public class BoxTests
     [Fact]
     public void Create_GeneratesUniqueId()
     {
-        var box1 = new Box("BOX-001", null, null, null);
-        var box2 = new Box("BOX-002", null, null, null);
+        var box1 = new Box("BOX-001", null, null, null, ObjectId.Empty);
+        var box2 = new Box("BOX-002", null, null, null, ObjectId.Empty);
 
         box1.Id.Should().NotBe(box2.Id);
     }
@@ -124,7 +124,7 @@ public class BoxTests
     [Fact]
     public void MultipleItems_AllTrackedCorrectly()
     {
-        var box = new Box("BOX-001", null, null, null);
+        var box = new Box("BOX-001", null, null, null, ObjectId.Empty);
         var item1 = new Item("Item 1", "Desc 1");
         var item2 = new Item("Item 2", "Desc 2");
         var item3 = new Item("Item 3", "Desc 3");

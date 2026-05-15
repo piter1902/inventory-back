@@ -16,6 +16,7 @@ public static class DependencyInjection
 
         services.AddSingleton<MongoDbContext>();
         services.AddScoped<IBoxRepository, BoxRepository>();
+        services.AddScoped<IZoneRepository, ZoneRepository>();
         services.AddScoped<IImageCompressionService, ImageCompressionService>();
 
         return services;

@@ -23,13 +23,24 @@ public class MongoDbContext
     }
 
     public IMongoCollection<Box> Boxes => _database.GetCollection<Box>("boxes");
+    public IMongoCollection<Zone> Zones => _database.GetCollection<Zone>("zones");
 
     public IMongoCollection<T> GetCollection<T>(string name) => _database.GetCollection<T>(name);
 
     public async Task EnsureIndexesAsync()
     {
-        var indexKeys = Builders<Box>.IndexKeys.Ascending(b => b.Identifier);
-        var indexModel = new CreateIndexModel<Box>(indexKeys, new CreateIndexOptions { Unique = true });
-        await Boxes.Indexes.CreateOneAsync(indexModel);
+        var boxIndexKeys = Builders<Box>.IndexKeys.Ascending(b => b.Identifier);
+        var boxIndexModel = new CreateIndexModel<Box>(boxIndexKeys, new CreateIndexOptions { Unique = true });
+        await Boxes.Indexes.CreateOneAsync(boxIndexModel);
+
+        var zoneIndexKeys = Builders<Zone>.IndexKeys.Ascending(z => z.Name);
+        var zoneIndexModel = new CreateIndexModel<Zone>(zoneIndexKeys, new CreateIndexOptions { Unique = true });
+        await Zones.Indexes.CreateOneAsync(zoneIndexModel);
+
+        var defaultZone = await Zones.Find(z => z.Name == "Sin especificar").FirstOrDefaultAsync();
+        if (defaultZone is null)
+        {
+            await Zones.InsertOneAsync(new Zone("Sin especificar"));
+        }
     }
 }

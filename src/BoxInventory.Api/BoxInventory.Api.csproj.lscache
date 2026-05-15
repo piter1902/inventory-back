@@ -13,7 +13,19 @@ primary
 lastDtbSucceeded
 
 [properties]
+AssemblyName=BoxInventory.Api
 CommandLineArgsForDesignTimeEvaluation=-langversion:14.0 -define:TRACE -doc:"obj\Debug/net10.0/BoxInventory.Api.xml"
+CompilerGeneratedFilesOutputPath=
+MaxSupportedLangVersion=14.0
+ProjectAssetsFile=<PATH>obj/project.assets.json
+RootNamespace=BoxInventory.Api
+RunAnalyzers=
+RunAnalyzersDuringLiveAnalysis=
+SolutionPath=<PATH>../../BoxInventory.sln
+TargetFrameworkIdentifier=.NETCoreApp
+TargetPath=<PATH>bin/Debug/net10.0/BoxInventory.Api.dll
+TargetRefPath=<PATH>obj/Debug/net10.0/ref/BoxInventory.Api.dll
+TemporaryDependencyNodeTargetIdentifier=net10.0
 
 [commandLineArguments]
 /noconfig
@@ -44,7 +56,9 @@ CommandLineArgsForDesignTimeEvaluation=-langversion:14.0 -define:TRACE -doc:"obj
 /warnaserror+:NU1605,SYSLIB0011
 
 [sourceFiles]
-Controllers/BoxesController.cs
+Controllers/
+ BoxesController.cs
+ ZonesController.cs
 Middleware/ExceptionHandlingMiddleware.cs
 obj/Debug/net10.0/
  .NETCoreApp,Version=v10.0.AssemblyAttributes.cs

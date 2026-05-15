@@ -13,7 +13,7 @@ public class ValidatorsTests
     public void CreateBoxCommand_Valid_Passes()
     {
         var validator = new CreateBoxCommandValidator();
-        var command = new CreateBoxCommand("Caja", null, null, null);
+        var command = new CreateBoxCommand("Caja", null, null, null, null);
 
         var result = validator.Validate(command);
 
@@ -25,7 +25,7 @@ public class ValidatorsTests
     {
         var validator = new CreateBoxCommandValidator();
         var items = new List<CreateItemRequest> { new("Cable", "desc") };
-        var command = new CreateBoxCommand("Caja", null, null, items);
+        var command = new CreateBoxCommand("Caja", null, null, null, items);
 
         var result = validator.Validate(command);
 
@@ -37,7 +37,7 @@ public class ValidatorsTests
     {
         var validator = new CreateBoxCommandValidator();
         var items = new List<CreateItemRequest> { new("", "desc") };
-        var command = new CreateBoxCommand("Caja", null, null, items);
+        var command = new CreateBoxCommand("Caja", null, null, null, items);
 
         var result = validator.Validate(command);
 
@@ -48,7 +48,7 @@ public class ValidatorsTests
     public void UpdateBoxCommand_Valid_Passes()
     {
         var validator = new UpdateBoxCommandValidator();
-        var command = new UpdateBoxCommand(ValidId, null, null, null, null);
+        var command = new UpdateBoxCommand(ValidId, null, null, null, null, null);
 
         var result = validator.Validate(command);
 
@@ -59,7 +59,7 @@ public class ValidatorsTests
     public void UpdateBoxCommand_EmptyId_Fails()
     {
         var validator = new UpdateBoxCommandValidator();
-        var command = new UpdateBoxCommand("", null, null, null, null);
+        var command = new UpdateBoxCommand("", null, null, null, null, null);
 
         var result = validator.Validate(command);
 
@@ -71,7 +71,7 @@ public class ValidatorsTests
     {
         var validator = new UpdateBoxCommandValidator();
         var items = new List<UpdateItemRequest> { new("Cable", "desc") };
-        var command = new UpdateBoxCommand(ValidId, null, null, null, items);
+        var command = new UpdateBoxCommand(ValidId, null, null, null, null, items);
 
         var result = validator.Validate(command);
 
@@ -83,7 +83,7 @@ public class ValidatorsTests
     {
         var validator = new UpdateBoxCommandValidator();
         var items = new List<UpdateItemRequest> { new("", "desc") };
-        var command = new UpdateBoxCommand(ValidId, null, null, null, items);
+        var command = new UpdateBoxCommand(ValidId, null, null, null, null, items);
 
         var result = validator.Validate(command);
 

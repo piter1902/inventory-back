@@ -24,6 +24,7 @@ public class GetAllBoxesQueryHandler : IRequestHandler<GetAllBoxesQuery, List<Bo
             b.Description,
             b.QrUrl,
             b.ImageBase64,
+            b.ZoneId.ToString(),
             b.Items.Select(i => new ItemDto(i.Id.ToString(), i.Name, i.Description)).ToList()
         )).ToList();
     }

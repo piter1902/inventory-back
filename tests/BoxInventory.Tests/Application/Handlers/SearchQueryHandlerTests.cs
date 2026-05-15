@@ -1,6 +1,7 @@
 using BoxInventory.Application.Boxes.Queries.Search;
 using BoxInventory.Domain.Entities;
 using BoxInventory.Domain.Interfaces;
+using MongoDB.Bson;
 
 namespace BoxInventory.Tests.Application.Handlers;
 
@@ -38,8 +39,8 @@ public class SearchQueryHandlerTests
     {
         var boxes = new List<Box>
         {
-            new("BOX-001", "Electronics Box", null, null),
-            new("BOX-002", "Kitchen Box", null, null),
+            new("BOX-001", "Electronics Box", null, null, ObjectId.Empty),
+            new("BOX-002", "Kitchen Box", null, null, ObjectId.Empty),
         };
         _repository.Setup(r => r.SearchByNameAsync("Electronics", It.IsAny<CancellationToken>()))
             .ReturnsAsync(boxes.Where(b => b.Name.Contains("Electronics")).ToList());
@@ -53,11 +54,11 @@ public class SearchQueryHandlerTests
     [Fact]
     public async Task Handle_MatchingItemName_ReturnsItemWithBoxInfo()
     {
-        var box = new Box("BOX-001", "Caja Herramientas", null, null);
+        var box = new Box("BOX-001", "Caja Herramientas", null, null, ObjectId.Empty);
         box.AddItem(new Item("Martillo", "Martillo de 500g"));
         box.AddItem(new Item("Destornillador", "Destornillador plano"));
 
-        var otherBox = new Box("BOX-002", "Caja Cocina", null, null);
+        var otherBox = new Box("BOX-002", "Caja Cocina", null, null, ObjectId.Empty);
         otherBox.AddItem(new Item("Cuchillo", "Cuchillo de chef"));
 
         _repository.Setup(r => r.SearchByNameAsync("Martillo", It.IsAny<CancellationToken>()))
@@ -75,10 +76,10 @@ public class SearchQueryHandlerTests
     [Fact]
     public async Task Handle_MatchBothBoxAndItem_ReturnsSegmented()
     {
-        var box = new Box("BOX-001", "Electro Box", null, null);
+        var box = new Box("BOX-001", "Electro Box", null, null, ObjectId.Empty);
         box.AddItem(new Item("Electro Cable", "Cable HDMI 2m"));
 
-        var otherBox = new Box("BOX-002", "Cocina", null, null);
+        var otherBox = new Box("BOX-002", "Cocina", null, null, ObjectId.Empty);
         otherBox.AddItem(new Item("Cuchillo", "Acero"));
 
         _repository.Setup(r => r.SearchByNameAsync("Electro", It.IsAny<CancellationToken>()))

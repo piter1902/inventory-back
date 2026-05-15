@@ -2,6 +2,7 @@ using BoxInventory.Application.Boxes.Commands.DeleteBox;
 using BoxInventory.Application.Common.Exceptions;
 using BoxInventory.Domain.Entities;
 using BoxInventory.Domain.Interfaces;
+using MongoDB.Bson;
 
 namespace BoxInventory.Tests.Application.Handlers;
 
@@ -21,7 +22,7 @@ public class DeleteBoxCommandHandlerTests
     {
         var id = "507f1f77bcf86cd799439011";
         _repository.Setup(r => r.GetByIdAsync(id, It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new Box("BOX-001", null, null, null));
+            .ReturnsAsync(new Box("BOX-001", null, null, null, ObjectId.Empty));
 
         var result = await _handler.Handle(new DeleteBoxCommand(id), default);
 

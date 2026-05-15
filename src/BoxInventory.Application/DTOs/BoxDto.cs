@@ -7,4 +7,5 @@ public record BoxDto(
     string Description,
     string QrUrl,
     string ImageBase64,
+    string ZoneId,
     List<ItemDto> Items);

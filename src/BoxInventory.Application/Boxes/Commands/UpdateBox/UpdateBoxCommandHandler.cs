@@ -4,6 +4,7 @@ using BoxInventory.Domain.Interfaces;
 using BoxInventory.Application.DTOs;
 using MediatR;
 using BoxInventory.Domain.Entities;
+using MongoDB.Bson;
 
 namespace BoxInventory.Application.Boxes.Commands.UpdateBox;
 
@@ -11,11 +12,13 @@ public class UpdateBoxCommandHandler : IRequestHandler<UpdateBoxCommand, BoxDto>
 {
     private readonly IBoxRepository _repository;
     private readonly IImageCompressionService _imageCompression;
+    private readonly IZoneRepository _zoneRepository;
 
-    public UpdateBoxCommandHandler(IBoxRepository repository, IImageCompressionService imageCompression)
+    public UpdateBoxCommandHandler(IBoxRepository repository, IImageCompressionService imageCompression, IZoneRepository zoneRepository)
     {
         _repository = repository;
         _imageCompression = imageCompression;
+        _zoneRepository = zoneRepository;
     }
 
     public async Task<BoxDto> Handle(UpdateBoxCommand request, CancellationToken cancellationToken)
@@ -26,6 +29,11 @@ public class UpdateBoxCommandHandler : IRequestHandler<UpdateBoxCommand, BoxDto>
         box.SetName(request.Name);
         box.SetDescription(request.Description);
         box.SetImageBase64(_imageCompression.Compress(request.ImageBase64));
+
+        if (request.ZoneId is not null)
+        {
+            box.SetZone(ObjectId.Parse(request.ZoneId));
+        }
 
         if (request.Items is not null)
         {
@@ -45,6 +53,7 @@ public class UpdateBoxCommandHandler : IRequestHandler<UpdateBoxCommand, BoxDto>
             box.Description,
             box.QrUrl,
             box.ImageBase64,
+            box.ZoneId.ToString(),
             box.Items.Select(i => new ItemDto(i.Id.ToString(), i.Name, i.Description)).ToList());
     }
 }
