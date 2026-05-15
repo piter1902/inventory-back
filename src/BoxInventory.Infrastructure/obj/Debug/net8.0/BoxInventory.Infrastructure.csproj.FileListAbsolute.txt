@@ -1,0 +1,17 @@
+/Users/pedroalluetamargo/Desktop/inventory-back/src/BoxInventory.Infrastructure/obj/Debug/net8.0/BoxInventory.Infrastructure.csproj.AssemblyReference.cache
+/Users/pedroalluetamargo/Desktop/inventory-back/src/BoxInventory.Infrastructure/obj/Debug/net8.0/BoxInventory.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+/Users/pedroalluetamargo/Desktop/inventory-back/src/BoxInventory.Infrastructure/obj/Debug/net8.0/BoxInventory.Infrastructure.AssemblyInfoInputs.cache
+/Users/pedroalluetamargo/Desktop/inventory-back/src/BoxInventory.Infrastructure/obj/Debug/net8.0/BoxInventory.Infrastructure.AssemblyInfo.cs
+/Users/pedroalluetamargo/Desktop/inventory-back/src/BoxInventory.Infrastructure/obj/Debug/net8.0/BoxInventory.Infrastructure.csproj.CoreCompileInputs.cache
+/Users/pedroalluetamargo/Desktop/inventory-back/src/BoxInventory.Infrastructure/bin/Debug/net8.0/BoxInventory.Infrastructure.deps.json
+/Users/pedroalluetamargo/Desktop/inventory-back/src/BoxInventory.Infrastructure/bin/Debug/net8.0/BoxInventory.Infrastructure.dll
+/Users/pedroalluetamargo/Desktop/inventory-back/src/BoxInventory.Infrastructure/bin/Debug/net8.0/BoxInventory.Infrastructure.pdb
+/Users/pedroalluetamargo/Desktop/inventory-back/src/BoxInventory.Infrastructure/bin/Debug/net8.0/BoxInventory.Application.dll
+/Users/pedroalluetamargo/Desktop/inventory-back/src/BoxInventory.Infrastructure/bin/Debug/net8.0/BoxInventory.Domain.dll
+/Users/pedroalluetamargo/Desktop/inventory-back/src/BoxInventory.Infrastructure/bin/Debug/net8.0/BoxInventory.Application.pdb
+/Users/pedroalluetamargo/Desktop/inventory-back/src/BoxInventory.Infrastructure/bin/Debug/net8.0/BoxInventory.Domain.pdb
+/Users/pedroalluetamargo/Desktop/inventory-back/src/BoxInventory.Infrastructure/obj/Debug/net8.0/BoxInven.D15F0E00.Up2Date
+/Users/pedroalluetamargo/Desktop/inventory-back/src/BoxInventory.Infrastructure/obj/Debug/net8.0/BoxInventory.Infrastructure.dll
+/Users/pedroalluetamargo/Desktop/inventory-back/src/BoxInventory.Infrastructure/obj/Debug/net8.0/refint/BoxInventory.Infrastructure.dll
+/Users/pedroalluetamargo/Desktop/inventory-back/src/BoxInventory.Infrastructure/obj/Debug/net8.0/BoxInventory.Infrastructure.pdb
+/Users/pedroalluetamargo/Desktop/inventory-back/src/BoxInventory.Infrastructure/obj/Debug/net8.0/ref/BoxInventory.Infrastructure.dll

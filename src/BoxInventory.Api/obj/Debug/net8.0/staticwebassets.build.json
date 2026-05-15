@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "JjCKA0ZkswbJCGAgqDmvSWldTBw7mooXYCnjwFfxHr0=",
+  "Source": "BoxInventory.Api",
+  "BasePath": "_content/BoxInventory.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BoxInventory.Api</name>
+    </assembly>
+    <members>
+        <member name="M:BoxInventory.Api.Controllers.BoxesController.GetAll(System.Threading.CancellationToken)">
+            <summary>Obtiene todas las cajas registradas.</summary>
+        </member>
+        <member name="M:BoxInventory.Api.Controllers.BoxesController.GetById(System.String,System.Threading.CancellationToken)">
+            <summary>Obtiene una caja por su identificador único.</summary>
+            <param name="id">Identificador único de la caja.</param>
+        </member>
+        <member name="M:BoxInventory.Api.Controllers.BoxesController.Search(System.String,System.Threading.CancellationToken)">
+            <summary>Busca cajas e items por nombre. El resultado se segmenta en cajas e items, cada item incluye el nombre de su caja.</summary>
+            <param name="query">Término de búsqueda.</param>
+        </member>
+        <member name="M:BoxInventory.Api.Controllers.BoxesController.Create(BoxInventory.Application.Boxes.Commands.CreateBox.CreateBoxCommand,System.Threading.CancellationToken)">
+            <summary>Crea una nueva caja. El identificador y el QR se generan automáticamente. Puede incluir items iniciales.</summary>
+        </member>
+        <member name="M:BoxInventory.Api.Controllers.BoxesController.Update(System.String,BoxInventory.Api.Controllers.UpdateBoxRequest,System.Threading.CancellationToken)">
+            <summary>Reemplaza completamente una caja: nombre, imagen e items.</summary>
+            <param name="id">Identificador único de la caja.</param>
+        </member>
+        <member name="M:BoxInventory.Api.Controllers.BoxesController.Delete(System.String,System.Threading.CancellationToken)">
+            <summary>Elimina una caja y todo su contenido.</summary>
+            <param name="id">Identificador único de la caja a eliminar.</param>
+        </member>
+        <member name="T:Program">
+            <summary>
+            Auto-generated public partial Program class for top-level statement apps.
+            </summary>
+        </member>
+    </members>
+</doc>

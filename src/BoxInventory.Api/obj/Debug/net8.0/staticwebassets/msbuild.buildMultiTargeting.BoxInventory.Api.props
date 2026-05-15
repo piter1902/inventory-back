@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/BoxInventory.Api.props" />
+</Project>
