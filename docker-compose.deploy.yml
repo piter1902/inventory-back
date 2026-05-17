@@ -3,6 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    platform: linux/amd64
     container_name: box-inventory-api
     ports:
       - "5000:8080"
@@ -19,6 +20,7 @@ services:
 
   mongodb:
     image: mongo:6.0
+    platform: linux/amd64
     container_name: box-inventory-mongo
     ports:
       - "27017:27017"

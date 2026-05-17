@@ -58,3 +58,7 @@ appsettings.*.local.json
 
 # Docker
 docker-compose.override.yml
+
+# Environment files (keep example)
+.env.*
+!.env.example
