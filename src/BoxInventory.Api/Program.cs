@@ -25,19 +25,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 
-var corsOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? ["*"];
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(policy =>
-    {
-        if (corsOrigins.Length == 1 && corsOrigins[0] == "*")
-            policy.AllowAnyOrigin();
-        else
-            policy.WithOrigins(corsOrigins);
-
-        policy.AllowAnyHeader()
-              .AllowAnyMethod();
-    });
+   options.AddDefaultPolicy(policy =>
+       policy.AllowAnyOrigin()
+             .AllowAnyHeader()
+             .AllowAnyMethod());
 });
 
 builder.Services.AddControllers();
@@ -53,21 +46,7 @@ builder.Services.AddSwaggerGen(c =>
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
-
-app.Use(async (context, next) =>
-{
-    if (HttpMethods.IsOptions(context.Request.Method))
-    {
-        var origin = context.Request.Headers.Origin.FirstOrDefault() ?? "*";
-        context.Response.StatusCode = 200;
-        context.Response.Headers.Append("Access-Control-Allow-Origin", origin);
-        context.Response.Headers.Append("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        context.Response.Headers.Append("Access-Control-Allow-Headers", "Authorization, Content-Type");
-        return;
-    }
-
-    await next();
-});
+app.UseCors();
 
 if (app.Environment.IsDevelopment())
 {
@@ -75,7 +54,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 

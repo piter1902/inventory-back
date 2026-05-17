@@ -34,6 +34,22 @@ public class BoxRepository : BaseRepository<Box>, IBoxRepository
         return await Collection.Find(filter).ToListAsync(cancellationToken);
     }
 
+    public async Task AssignToZoneAsync(List<ObjectId> boxIds, ObjectId zoneId, CancellationToken cancellationToken = default)
+    {
+        await Collection.UpdateManyAsync(
+            Builders<Box>.Filter.In(b => b.Id, boxIds),
+            Builders<Box>.Update.Set(b => b.ZoneId, zoneId),
+            cancellationToken: cancellationToken);
+    }
+
+    public async Task<List<Box>> GetByZoneIdAsync(ObjectId zoneId, CancellationToken cancellationToken = default)
+    {
+        return await Collection
+            .Find(b => b.ZoneId == zoneId)
+            .SortBy(b => b.Identifier)
+            .ToListAsync(cancellationToken);
+    }
+
     public override async Task<List<Box>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         return await Collection

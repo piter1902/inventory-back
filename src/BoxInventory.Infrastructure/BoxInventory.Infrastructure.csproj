@@ -13,5 +13,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BoxInventory.Application\BoxInventory.Application.csproj" />
+    <ProjectReference Include="..\BoxInventory.Domain\BoxInventory.Domain.csproj" />
   </ItemGroup>
 </Project>

@@ -3,24 +3,34 @@ using BoxInventory.Application.DTOs;
 using BoxInventory.Domain.Entities;
 using BoxInventory.Domain.Interfaces;
 using MediatR;
+using MongoDB.Bson;
 
-namespace BoxInventory.Application.Zones.Queries.GetZoneById;
+namespace BoxInventory.Application.Zones.Commands.UpdateZone;
 
-public class GetZoneByIdQueryHandler : IRequestHandler<GetZoneByIdQuery, ZoneDetailDto>
+public class UpdateZoneCommandHandler : IRequestHandler<UpdateZoneCommand, ZoneDetailDto>
 {
     private readonly IZoneRepository _zoneRepository;
     private readonly IBoxRepository _boxRepository;
 
-    public GetZoneByIdQueryHandler(IZoneRepository zoneRepository, IBoxRepository boxRepository)
+    public UpdateZoneCommandHandler(IZoneRepository zoneRepository, IBoxRepository boxRepository)
     {
         _zoneRepository = zoneRepository;
         _boxRepository = boxRepository;
     }
 
-    public async Task<ZoneDetailDto> Handle(GetZoneByIdQuery request, CancellationToken cancellationToken)
+    public async Task<ZoneDetailDto> Handle(UpdateZoneCommand request, CancellationToken cancellationToken)
     {
         var zone = await _zoneRepository.GetByIdAsync(request.Id, cancellationToken)
             ?? throw new NotFoundException(nameof(Zone), request.Id);
+
+        zone.SetName(request.Name);
+        await _zoneRepository.UpdateAsync(zone, cancellationToken);
+
+        if (request.BoxIds is { Count: > 0 })
+        {
+            var boxObjectIds = request.BoxIds.Select(ObjectId.Parse).ToList();
+            await _boxRepository.AssignToZoneAsync(boxObjectIds, zone.Id, cancellationToken);
+        }
 
         var boxes = await _boxRepository.GetByZoneIdAsync(zone.Id, cancellationToken);
 

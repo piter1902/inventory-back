@@ -31,7 +31,7 @@ public class MongoDbContext
     {
         var boxIndexKeys = Builders<Box>.IndexKeys.Ascending(b => b.Identifier);
         var boxIndexModel = new CreateIndexModel<Box>(boxIndexKeys, new CreateIndexOptions { Unique = true });
-        await Boxes.Indexes.CreateOneAsync(boxIndexModel);
+            await Boxes.Indexes.CreateOneAsync(boxIndexModel);
 
         var zoneIndexKeys = Builders<Zone>.IndexKeys.Ascending(z => z.Name);
         var zoneIndexModel = new CreateIndexModel<Zone>(zoneIndexKeys, new CreateIndexOptions { Unique = true });
