@@ -35,6 +35,7 @@ public class GetZoneByIdQueryHandler : IRequestHandler<GetZoneByIdQuery, ZoneDet
                 b.QrUrl,
                 b.ImageBase64,
                 b.ZoneId.ToString(),
+                zone.Name,
                 b.Items.Select(i => new ItemDto(i.Id.ToString(), i.Name, i.Description)).ToList()
             )).ToList());
     }

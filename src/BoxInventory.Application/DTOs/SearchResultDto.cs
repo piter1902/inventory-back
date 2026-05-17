@@ -8,11 +8,13 @@ public record SearchBoxResultDto(
     string Id,
     string Name,
     string Description,
-    string ImageBase64);
+    string ImageBase64,
+    string? ZoneName);
 
 public record SearchItemResultDto(
     string Id,
     string Name,
     string Description,
     string BoxId,
-    string BoxName);
+    string BoxName,
+    string? ZoneName);

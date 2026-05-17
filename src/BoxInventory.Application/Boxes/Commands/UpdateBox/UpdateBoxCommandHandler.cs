@@ -30,9 +30,11 @@ public class UpdateBoxCommandHandler : IRequestHandler<UpdateBoxCommand, BoxDto>
         box.SetDescription(request.Description);
         box.SetImageBase64(_imageCompression.Compress(request.ImageBase64));
 
+        ObjectId? newZoneId = null;
         if (request.ZoneId is not null)
         {
-            box.SetZone(ObjectId.Parse(request.ZoneId));
+            newZoneId = ObjectId.Parse(request.ZoneId);
+            box.SetZone(newZoneId.Value);
         }
 
         if (request.Items is not null)
@@ -46,6 +48,11 @@ public class UpdateBoxCommandHandler : IRequestHandler<UpdateBoxCommand, BoxDto>
 
         await _repository.UpdateAsync(box, cancellationToken);
 
+        var effectiveZoneId = newZoneId ?? box.ZoneId;
+        var zoneName = effectiveZoneId != ObjectId.Empty
+            ? (await _zoneRepository.GetByIdAsync(effectiveZoneId.ToString(), cancellationToken))?.Name
+            : null;
+
         return new BoxDto(
             box.Id.ToString(),
             box.Identifier,
@@ -54,6 +61,7 @@ public class UpdateBoxCommandHandler : IRequestHandler<UpdateBoxCommand, BoxDto>
             box.QrUrl,
             box.ImageBase64,
             box.ZoneId.ToString(),
+            zoneName,
             box.Items.Select(i => new ItemDto(i.Id.ToString(), i.Name, i.Description)).ToList());
     }
 }

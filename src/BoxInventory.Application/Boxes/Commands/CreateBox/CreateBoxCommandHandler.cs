@@ -49,10 +49,11 @@ public class CreateBoxCommandHandler : IRequestHandler<CreateBoxCommand, BoxDto>
 
         await _repository.CreateAsync(box, cancellationToken);
 
-        return MapToDto(box);
+        var zoneName = (await _zoneRepository.GetByIdAsync(zoneId.ToString(), cancellationToken))?.Name;
+        return MapToDto(box, zoneName);
     }
 
-    private static BoxDto MapToDto(Box box) => new(
+    private static BoxDto MapToDto(Box box, string? zoneName) => new(
         box.Id.ToString(),
         box.Identifier,
         box.Name,
@@ -60,5 +61,6 @@ public class CreateBoxCommandHandler : IRequestHandler<CreateBoxCommand, BoxDto>
         box.QrUrl,
         box.ImageBase64,
         box.ZoneId.ToString(),
+        zoneName,
         box.Items.Select(i => new ItemDto(i.Id.ToString(), i.Name, i.Description)).ToList());
 }

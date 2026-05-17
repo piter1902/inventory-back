@@ -8,12 +8,16 @@ namespace BoxInventory.Tests.Application.Handlers;
 public class GetAllBoxesQueryHandlerTests
 {
     private readonly Mock<IBoxRepository> _repository;
+    private readonly Mock<IZoneRepository> _zoneRepository;
     private readonly GetAllBoxesQueryHandler _handler;
 
     public GetAllBoxesQueryHandlerTests()
     {
         _repository = new Mock<IBoxRepository>();
-        _handler = new GetAllBoxesQueryHandler(_repository.Object);
+        _zoneRepository = new Mock<IZoneRepository>();
+        _zoneRepository.Setup(r => r.GetAllAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync([]);
+        _handler = new GetAllBoxesQueryHandler(_repository.Object, _zoneRepository.Object);
     }
 
     [Fact]

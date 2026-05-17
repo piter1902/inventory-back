@@ -14,7 +14,7 @@ public class GetBoxByIdQueryHandlerTests
     public GetBoxByIdQueryHandlerTests()
     {
         _repository = new Mock<IBoxRepository>();
-        _handler = new GetBoxByIdQueryHandler(_repository.Object);
+        _handler = new GetBoxByIdQueryHandler(_repository.Object, new Mock<IZoneRepository>().Object);
     }
 
     [Fact]

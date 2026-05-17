@@ -13,7 +13,10 @@ public class SearchQueryHandlerTests
     public SearchQueryHandlerTests()
     {
         _repository = new Mock<IBoxRepository>();
-        _handler = new SearchQueryHandler(_repository.Object);
+        var zoneRepository = new Mock<IZoneRepository>();
+        zoneRepository.Setup(r => r.GetAllAsync(It.IsAny<CancellationToken>()))
+            .ReturnsAsync([]);
+        _handler = new SearchQueryHandler(_repository.Object, zoneRepository.Object);
     }
 
     [Fact]
