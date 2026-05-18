@@ -6,7 +6,6 @@ RUN dotnet publish "src/BoxInventory.Api/BoxInventory.Api.csproj" -c Release -o 
 
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
 WORKDIR /app
-EXPOSE 8080
-ENV ASPNETCORE_URLS=http://+:8080
+EXPOSE 5000
 COPY --from=build /app/publish .
 ENTRYPOINT ["dotnet", "BoxInventory.Api.dll"]
