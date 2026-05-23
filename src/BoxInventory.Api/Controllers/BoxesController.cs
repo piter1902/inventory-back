@@ -1,5 +1,6 @@
 using BoxInventory.Application.Boxes.Commands.CreateBox;
 using BoxInventory.Application.Boxes.Commands.DeleteBox;
+using BoxInventory.Application.Boxes.Commands.ImportBoxes;
 using BoxInventory.Application.Boxes.Commands.UpdateBox;
 using BoxInventory.Application.Boxes.Queries.GetAllBoxes;
 using BoxInventory.Application.Boxes.Queries.GetBoxById;
@@ -65,6 +66,15 @@ public class BoxesController : ControllerBase
         var command = new UpdateBoxCommand(id, request.Name, request.Description, request.ImageBase64, request.ZoneId, request.Items);
         var box = await _mediator.Send(command, cancellationToken);
         return Ok(box);
+    }
+
+    /// <summary>Importa cajas desde un archivo Excel codificado en base64. Cada hoja del libro corresponde a una caja.</summary>
+    /// <param name="command">Objeto con el contenido del archivo Excel en base64.</param>
+    [HttpPost("import")]
+    public async Task<ActionResult<ImportBoxesResult>> Import([FromBody] ImportBoxesCommand command, CancellationToken cancellationToken)
+    {
+        var result = await _mediator.Send(command, cancellationToken);
+        return Ok(result);
     }
 
     /// <summary>Elimina una caja y todo su contenido.</summary>

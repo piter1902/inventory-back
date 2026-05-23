@@ -26,5 +26,11 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\BoxInventory.Application\BoxInventory.Application.csproj" />
     <ProjectReference Include="..\..\src\BoxInventory.Domain\BoxInventory.Domain.csproj" />
+    <ProjectReference Include="..\..\src\BoxInventory.Infrastructure\BoxInventory.Infrastructure.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="caja_import_template.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

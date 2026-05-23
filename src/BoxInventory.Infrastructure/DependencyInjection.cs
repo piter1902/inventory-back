@@ -18,6 +18,7 @@ public static class DependencyInjection
         services.AddScoped<IBoxRepository, BoxRepository>();
         services.AddScoped<IZoneRepository, ZoneRepository>();
         services.AddScoped<IImageCompressionService, ImageCompressionService>();
+        services.AddScoped<IExcelReaderService, ExcelReaderService>();
 
         return services;
     }
