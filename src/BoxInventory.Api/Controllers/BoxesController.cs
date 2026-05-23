@@ -1,9 +1,11 @@
 using BoxInventory.Application.Boxes.Commands.CreateBox;
 using BoxInventory.Application.Boxes.Commands.DeleteBox;
 using BoxInventory.Application.Boxes.Commands.ImportBoxes;
+using BoxInventory.Application.Boxes.Commands.MoveItems;
 using BoxInventory.Application.Boxes.Commands.UpdateBox;
 using BoxInventory.Application.Boxes.Queries.GetAllBoxes;
 using BoxInventory.Application.Boxes.Queries.GetBoxById;
+using BoxInventory.Application.Boxes.Queries.GetMovementLogs;
 using BoxInventory.Application.Boxes.Queries.Search;
 using BoxInventory.Application.DTOs;
 using MediatR;
@@ -77,6 +79,33 @@ public class BoxesController : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>Mueve uno o varios items desde la caja origen a la caja destino. Registra un log por cada item movido.</summary>
+    /// <param name="id">Identificador de la caja origen.</param>
+    /// <param name="request">Lista de IDs de items y caja destino.</param>
+    [HttpPost("{id}/items/move")]
+    public async Task<ActionResult<MoveItemsResult>> MoveItems(string id, MoveItemsRequest request, CancellationToken cancellationToken)
+    {
+        var username = User.FindFirst("preferred_username")?.Value ?? "unknown";
+        var command = new MoveItemsCommand(id, request.ItemIds, request.DestinationBoxId, username);
+        return Ok(await _mediator.Send(command, cancellationToken));
+    }
+
+    /// <summary>Obtiene los logs de movimiento de items asociados a una caja (como origen o destino).</summary>
+    /// <param name="id">Identificador de la caja.</param>
+    [HttpGet("{id}/logs")]
+    public async Task<ActionResult<List<ItemMovementLogDto>>> GetLogs(string id, CancellationToken cancellationToken)
+    {
+        return Ok(await _mediator.Send(new GetMovementLogsQuery(id), cancellationToken));
+    }
+
+    /// <summary>Obtiene todos los logs de movimiento de items, opcionalmente filtrados por caja.</summary>
+    /// <param name="boxId">Identificador de la caja para filtrar (opcional).</param>
+    [HttpGet("~/api/logs")]
+    public async Task<ActionResult<List<ItemMovementLogDto>>> GetAllLogs([FromQuery] string? boxId, CancellationToken cancellationToken)
+    {
+        return Ok(await _mediator.Send(new GetMovementLogsQuery(boxId), cancellationToken));
+    }
+
     /// <summary>Elimina una caja y todo su contenido.</summary>
     /// <param name="id">Identificador único de la caja a eliminar.</param>
     [HttpDelete("{id}")]
@@ -88,3 +117,4 @@ public class BoxesController : ControllerBase
 }
 
 public record UpdateBoxRequest(string? Name, string? Description, string? ImageBase64, string? ZoneId, List<UpdateItemRequest>? Items);
+public record MoveItemsRequest(List<string> ItemIds, string DestinationBoxId);

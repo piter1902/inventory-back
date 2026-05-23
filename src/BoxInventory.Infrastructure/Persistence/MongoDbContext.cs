@@ -24,6 +24,7 @@ public class MongoDbContext
 
     public IMongoCollection<Box> Boxes => _database.GetCollection<Box>("boxes");
     public IMongoCollection<Zone> Zones => _database.GetCollection<Zone>("zones");
+    public IMongoCollection<ItemMovementLog> Logs => _database.GetCollection<ItemMovementLog>("item_movement_logs");
 
     public IMongoCollection<T> GetCollection<T>(string name) => _database.GetCollection<T>(name);
 

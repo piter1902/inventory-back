@@ -1,8 +1,10 @@
 using BoxInventory.Application.Boxes.Commands.UpdateBox;
+using BoxInventory.Application.Boxes.Notifications;
 using BoxInventory.Application.Common.Exceptions;
 using BoxInventory.Application.Common.Interfaces;
 using BoxInventory.Domain.Entities;
 using BoxInventory.Domain.Interfaces;
+using MediatR;
 using MongoDB.Bson;
 
 namespace BoxInventory.Tests.Application.Handlers;
@@ -12,6 +14,7 @@ public class UpdateBoxCommandHandlerTests
     private readonly Mock<IBoxRepository> _repository;
     private readonly Mock<IZoneRepository> _zoneRepository;
     private readonly Mock<IImageCompressionService> _imageCompression;
+    private readonly Mock<IMediator> _mediator;
     private readonly UpdateBoxCommandHandler _handler;
 
     public UpdateBoxCommandHandlerTests()
@@ -21,7 +24,8 @@ public class UpdateBoxCommandHandlerTests
         _imageCompression = new Mock<IImageCompressionService>();
         _imageCompression.Setup(c => c.Compress(It.IsAny<string?>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>()))
             .Returns((string? s, int _, int __, int ___) => s);
-        _handler = new UpdateBoxCommandHandler(_repository.Object, _imageCompression.Object, _zoneRepository.Object);
+        _mediator = new Mock<IMediator>();
+        _handler = new UpdateBoxCommandHandler(_repository.Object, _imageCompression.Object, _zoneRepository.Object, _mediator.Object);
     }
 
     [Fact]
@@ -37,6 +41,32 @@ public class UpdateBoxCommandHandlerTests
         result.Identifier.Should().Be("BOX-001");
         result.QrUrl.Should().Be("/box/BOX-001");
         _repository.Verify(r => r.UpdateAsync(box, It.IsAny<CancellationToken>()), Times.Once);
+    }
+
+    [Fact]
+    public async Task Handle_NameChange_PublishesNotification()
+    {
+        var id = "507f1f77bcf86cd799439011";
+        var box = new Box("BOX-001", "Old Name", null, null, ObjectId.Empty);
+        _repository.Setup(r => r.GetByIdAsync(id, It.IsAny<CancellationToken>())).ReturnsAsync(box);
+
+        await _handler.Handle(new UpdateBoxCommand(id, "New Name", null, null, null, null), default);
+
+        _mediator.Verify(m => m.Publish(
+            It.Is<BoxNameChangedNotification>(n => n.BoxId == box.Id.ToString() && n.NewName == "New Name"),
+            It.IsAny<CancellationToken>()), Times.Once);
+    }
+
+    [Fact]
+    public async Task Handle_SameName_DoesNotPublishNotification()
+    {
+        var id = "507f1f77bcf86cd799439011";
+        var box = new Box("BOX-001", "Name", null, null, ObjectId.Empty);
+        _repository.Setup(r => r.GetByIdAsync(id, It.IsAny<CancellationToken>())).ReturnsAsync(box);
+
+        await _handler.Handle(new UpdateBoxCommand(id, "Name", null, null, null, null), default);
+
+        _mediator.Verify(m => m.Publish(It.IsAny<INotification>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
     [Fact]
