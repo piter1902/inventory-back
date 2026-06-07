@@ -15,7 +15,7 @@ public class GetMovementLogsQueryHandler : IRequestHandler<GetMovementLogsQuery,
 
     public async Task<List<ItemMovementLogDto>> Handle(GetMovementLogsQuery request, CancellationToken cancellationToken)
     {
-        var logs = request.BoxId is not null
+        var logs = !string.IsNullOrWhiteSpace(request.BoxId)
             ? await _logRepository.GetByBoxIdAsync(request.BoxId, cancellationToken)
             : await _logRepository.GetAllAsync(cancellationToken);
 

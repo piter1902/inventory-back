@@ -45,13 +45,13 @@ public class ExceptionHandlingMiddleware
                 })),
             NotFoundException => (
                 HttpStatusCode.NotFound,
-                exception.Message),
+                JsonSerializer.Serialize(new { error = exception.Message })),
             InvalidOperationException => (
                 HttpStatusCode.Conflict,
-                exception.Message),
+                JsonSerializer.Serialize(new { error = exception.Message })),
             _ => (
                 HttpStatusCode.InternalServerError,
-                "An internal server error occurred.")
+                JsonSerializer.Serialize(new { error = "An internal server error occurred." }))
         };
 
         context.Response.ContentType = "application/json";
