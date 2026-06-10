@@ -72,8 +72,8 @@ public class ImportBoxesCommandHandler : IRequestHandler<ImportBoxesCommand, Imp
                 return zone.Id;
         }
 
-        var defaultZone = await _zoneRepository.GetByNameAsync("Sin especificar", cancellationToken)
-            ?? throw new InvalidOperationException("Default zone 'Sin especificar' not found");
+        var defaultZone = await _zoneRepository.GetByNameAsync(Zone.DefaultZoneName, cancellationToken)
+            ?? throw new InvalidOperationException($"Default zone '{Zone.DefaultZoneName}' not found");
 
         return defaultZone.Id;
     }

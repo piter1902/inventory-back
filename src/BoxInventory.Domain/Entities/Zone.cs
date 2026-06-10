@@ -5,6 +5,8 @@ namespace BoxInventory.Domain.Entities;
 
 public class Zone : IEntity
 {
+    public const string DefaultZoneName = "Sin especificar";
+
     public ObjectId Id { get; private set; }
     public string Name { get; private set; } = null!;
 

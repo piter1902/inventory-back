@@ -1,4 +1,5 @@
 using BoxInventory.Application.Common.Interfaces;
+using Microsoft.Extensions.Logging;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.Processing;
@@ -7,6 +8,13 @@ namespace BoxInventory.Infrastructure.Services;
 
 public class ImageCompressionService : IImageCompressionService
 {
+    private readonly ILogger<ImageCompressionService> _logger;
+
+    public ImageCompressionService(ILogger<ImageCompressionService> logger)
+    {
+        _logger = logger;
+    }
+
     public string? Compress(string? imageBase64, int maxWidth = 1920, int maxHeight = 1080, int quality = 75)
     {
         if (string.IsNullOrEmpty(imageBase64))
@@ -38,8 +46,9 @@ public class ImageCompressionService : IImageCompressionService
 
             return $"data:image/jpeg;base64,{compressed}";
         }
-        catch
+        catch (Exception ex)
         {
+            _logger.LogWarning(ex, "Failed to compress image, returning original image without compression");
             return imageBase64;
         }
     }

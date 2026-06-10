@@ -25,12 +25,20 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 
+var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
+
 builder.Services.AddCors(options =>
 {
    options.AddDefaultPolicy(policy =>
-       policy.AllowAnyOrigin()
-             .AllowAnyHeader()
-             .AllowAnyMethod());
+   {
+       if (allowedOrigins.Contains("*"))
+           policy.AllowAnyOrigin();
+       else
+           policy.WithOrigins(allowedOrigins);
+
+       policy.AllowAnyHeader()
+             .AllowAnyMethod();
+   });
 });
 
 builder.Services.AddControllers();

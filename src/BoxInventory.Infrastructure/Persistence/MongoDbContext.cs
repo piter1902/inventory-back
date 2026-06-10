@@ -38,10 +38,10 @@ public class MongoDbContext
         var zoneIndexModel = new CreateIndexModel<Zone>(zoneIndexKeys, new CreateIndexOptions { Unique = true });
         await Zones.Indexes.CreateOneAsync(zoneIndexModel);
 
-        var defaultZone = await Zones.Find(z => z.Name == "Sin especificar").FirstOrDefaultAsync();
+        var defaultZone = await Zones.Find(z => z.Name == Zone.DefaultZoneName).FirstOrDefaultAsync();
         if (defaultZone is null)
         {
-            await Zones.InsertOneAsync(new Zone("Sin especificar"));
+            await Zones.InsertOneAsync(new Zone(Zone.DefaultZoneName));
         }
     }
 }
