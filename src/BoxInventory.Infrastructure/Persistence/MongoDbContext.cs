@@ -1,5 +1,6 @@
 using BoxInventory.Domain.Entities;
 using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 
@@ -27,6 +28,9 @@ public class MongoDbContext
     public IMongoCollection<ItemMovementLog> Logs => _database.GetCollection<ItemMovementLog>("item_movement_logs");
 
     public IMongoCollection<T> GetCollection<T>(string name) => _database.GetCollection<T>(name);
+
+    public virtual Task PingAsync(CancellationToken cancellationToken = default) =>
+        _database.RunCommandAsync<BsonDocument>(new BsonDocument("ping", 1), cancellationToken: cancellationToken);
 
     public async Task EnsureIndexesAsync()
     {

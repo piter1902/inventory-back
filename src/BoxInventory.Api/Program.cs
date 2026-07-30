@@ -1,10 +1,9 @@
-using System.Reflection;
+using BoxInventory.Api.Extensions;
 using BoxInventory.Api.Middleware;
 using BoxInventory.Application;
 using BoxInventory.Infrastructure;
 using BoxInventory.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,48 +24,25 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 
-var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
-
-builder.Services.AddCors(options =>
-{
-   options.AddDefaultPolicy(policy =>
-   {
-       if (allowedOrigins.Contains("*"))
-           policy.AllowAnyOrigin();
-       else
-           policy.WithOrigins(allowedOrigins);
-
-       policy.AllowAnyHeader()
-             .AllowAnyMethod();
-   });
-});
+builder.Services.AddCorsPolicy(builder.Configuration);
 
 builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    if (File.Exists(xmlPath))
-        c.IncludeXmlComments(xmlPath);
-});
+builder.Services.AddSwaggerDocumentation();
 
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseCors();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwaggerDocumentation();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseHttpsRedirection();
 app.MapControllers();
+
+app.MapHealthCheckEndpoints();
 
 // Ensure MongoDB indexes on startup
 using (var scope = app.Services.CreateScope())

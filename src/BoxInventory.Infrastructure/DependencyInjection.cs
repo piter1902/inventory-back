@@ -1,5 +1,6 @@
 using BoxInventory.Application.Common.Interfaces;
 using BoxInventory.Domain.Interfaces;
+using BoxInventory.Infrastructure.HealthChecks;
 using BoxInventory.Infrastructure.Persistence;
 using BoxInventory.Infrastructure.Repositories;
 using BoxInventory.Infrastructure.Services;
@@ -20,6 +21,9 @@ public static class DependencyInjection
         services.AddScoped<IImageCompressionService, ImageCompressionService>();
         services.AddScoped<IExcelReaderService, ExcelReaderService>();
         services.AddScoped<IItemMovementLogRepository, ItemMovementLogRepository>();
+
+        services.AddHealthChecks()
+            .AddCheck<MongoDbHealthCheck>("mongodb", tags: ["ready"]);
 
         return services;
     }
